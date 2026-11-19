@@ -1,38 +1,55 @@
-# בניית עסק
+# Landing Page Skills
 
-אוסף סקילים ל-Claude שעוזרים לבנות עסק. כרגע: **דפי נחיתה**. עוד סקילים יתווספו, אבל רק אחרי שנבדקו על מקרה אמיתי.
+[עברית](README.he.md)
 
-## דפי נחיתה: בונה ומבקר
+Two Claude skills that work as a pair: one **builds** a landing page, the other **audits** it. Hebrew and RTL first.
 
-שני סקילים נפרדים, כדי שהבונה לא יתן ציון לעצמו.
+Status: first version. Tested on a small test page only; not yet on a range of real sites.
 
-- **landing-page-builder** בונה דף נחיתה בעברית (RTL) מנתונים אמיתיים בלבד. שואל על מה שחסר במקום להמציא, ומתקן רק מה שהמבקר סימן, עד 3 סבבים.
-- **landing-page-design-audit** בודק עיצוב, נגישות ותוכן: פונטים, צבעים, ניגודיות, קישורים, מובייל, מקלדת וטופס. מה שאפשר למדוד נמדד בקוד (`scripts/check_page.py`), ומה ששיפוט מסומן כך.
+## The two skills
 
-## איך משתמשים
+- **landing-page-builder** builds a single-file landing page from real business facts. It asks for what is missing instead of inventing it, and fixes only what the auditor flagged, for up to 3 rounds.
+- **landing-page-design-audit** checks design, accessibility and content: font families, colors, contrast, links, mobile layout, keyboard use and forms. Whatever can be measured is measured in code (`scripts/check_page.py`). Judgment calls are labelled as judgment.
 
-1. מוסיפים את שני הסקילים ל-Claude (תיקיית כל סקיל מכילה `SKILL.md`).
-2. לדף קיים: "בדוק את הדף הזה עם landing-page-design-audit".
-3. לדף חדש: "בנה לי דף נחיתה עם landing-page-builder". הוא ישאל שאלות, יבנה ויתקן עד שהמבקר מאשר.
+The builder never scores its own work.
 
-שום דבר לא מתפרסם בלי אישור שלך.
+## Honesty rules
 
-## הרצת הסקריפט לבד
+The builder never invents testimonials, statistics, urgency, guarantees or photos. Missing proof stays a visible placeholder. Nothing is published without an explicit yes.
+
+## Usage
+
+1. Add both skill folders to Claude (each contains a `SKILL.md`).
+2. Existing page: "Audit this page with landing-page-design-audit".
+3. New page: "Build a landing page with landing-page-builder". It asks questions, builds, and iterates with the auditor.
+
+Run the checker on its own:
 
 ```
 pip install playwright
 playwright install chromium
-python skills/landing-pages/landing-page-design-audit/scripts/check_page.py <קובץ או כתובת> --json
+python skills/landing-pages/landing-page-design-audit/scripts/check_page.py <file-or-url> --json
 ```
 
-הוא בודק שגיאות קונסול, קישורים, גלילה אופקית ב-1440/768/390, שדות ללא label, h1, lang ו-dir, וניווט במקלדת.
+It checks console errors, links, horizontal scroll at 1440/768/390 px, form labels, h1 count, `lang`/`dir`, and keyboard navigation.
 
-## מה זה לא
+## Language
 
-- הציונים הם ציוני רובריקה, לא תוצאות עסקיות. אין כאן מדידת המרות.
-- זו בדיקה מעשית של נגישות, לא ביקורת WCAG רשמית.
-- הכלים אינם מחליפים בדיקה אנושית לפני פרסום.
+Defaults are Hebrew (`lang="he"`, `dir="rtl"`). The general rules (two fonts, three colors, contrast, accessibility) apply to any language, but only Hebrew pages have been tested.
 
-## רישיון ואחריות
+## Limits
 
-MIT. ללא אחריות וללא תמיכה. הסקילים אוסרים המצאת המלצות, מספרים ודחיפות. מי ששינה אותם אחראי לשינוי.
+- Scores are rubric scores, not conversion results. No traffic data is measured.
+- This is a practical accessibility check, not a formal WCAG audit.
+- It does not replace human review before publishing.
+
+## Author
+
+Sharon Weissberg: implementation and training, automation and AI
+
+- LinkedIn: https://www.linkedin.com/in/sharonweissberg/
+- Email: sharonor.we@gmail.com
+
+## License
+
+MIT. Provided as is, without warranty or support.
